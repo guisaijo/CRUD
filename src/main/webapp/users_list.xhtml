@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+     <h:head>Users list</h:head>
+     <h:body>
+	 	<h:form>
+		 	<p:dataTable var="user" value="#{dtUserBasicView.users}" 
+		 		layout="grid" widgetVar="usersTable"
+		 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+		 			{CurrentPageReport} {JumpToPageDropdown} 
+		 			{NextPageLink} {LastPageLink}"
+		 		paginator="true" rows="3" id="users"
+		 		emptyMessage="No users found with given criteria" 
+		 		filteredValue="#{dtUserBasicView.filteredUsers}" >
+		        
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Search all fields:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('usersTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        
+			    <p:column filterStyle="display:none" filterBy="#{user.id}" headerText="Id">
+			        <h:outputText value="#{user.id}" />
+			    </p:column>
+			 
+			    <p:column filterStyle="display:none" filterBy="#{user.name}" headerText="Name">
+			        <h:outputText value="#{user.name}" />
+			    </p:column>
+			 
+			    <p:column headerText="Age">
+			        <h:outputText value="#{user.age}" />
+			    </p:column>
+			 
+			    <p:column headerText="Gender">
+			        <h:outputText value="#{user.gender}" />
+			    </p:column>
+			    
+			    <p:column headerText="Options">
+				    <p:commandButton value="Alterar" type="button" 
+				    	onclick="PF('upload_modal').show();" />				 
+				    <p:commandButton value="Excluir" type="button" 
+				    	onclick="PF('delete_modal').show();" />
+			    </p:column>
+			    
+			</p:dataTable>
+		</h:form>
+		<p:dialog header="Alterar" widgetVar="upload_modal" minHeight="40">
+		    <h:outputText value="Eu te amo Tayla, eu quero ficar com vc pelo resto da minha vida!!!!" />
+		</p:dialog>
+		
+     </h:body>
+</html>
