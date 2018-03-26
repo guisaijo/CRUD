@@ -87,7 +87,7 @@ public class UserBasicView implements Serializable {
     public List<User> getUsers() {
         return users;
     }
-
+    
 	public List<User> getFilteredUsers() {
 		return filteredUsers;
 	}

@@ -50,7 +50,36 @@
 			</p:dataTable>
 		</h:form>
 		<p:dialog header="Alterar" widgetVar="upload_modal" minHeight="40">
-		    <h:outputText value="Eu te amo Tayla, eu quero ficar com vc pelo resto da minha vida!!!!" />
+			<h:panelGrid>
+				<p:row>
+					<p:column><h:outputText value="ID" /></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:inputText/></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:outputText value="Name" /></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:inputText/></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:outputText value="Age" /></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:inputText/></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:outputText value="Gender" /></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:inputText/></p:column>
+				</p:row>
+				<p:row>
+					<p:column><h:commandButton value="Atualizar"/></p:column>
+					<p:column><h:commandButton value="Cancelar"/></p:column>
+				</p:row>
+			</h:panelGrid>		
 		</p:dialog>
 		
      </h:body>
