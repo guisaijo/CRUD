@@ -6,20 +6,20 @@
     xmlns:p="http://primefaces.org/ui">
      <h:head>Users list</h:head>
      <h:body>
-	 	<h:form>
-		 	<p:dataTable var="user" value="#{dtUserBasicView.users}" 
-		 		layout="grid" widgetVar="usersTable"
+	 	<h:form id="form">
+	 		 
+		 	<p:dataTable var="user" value="#{user_view.users}" widgetVar="users_table"
 		 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
 		 			{CurrentPageReport} {JumpToPageDropdown} 
 		 			{NextPageLink} {LastPageLink}"
 		 		paginator="true" rows="3" id="users"
 		 		emptyMessage="No users found with given criteria" 
-		 		filteredValue="#{dtUserBasicView.filteredUsers}" >
+		 		filteredValue="#{user_view.filtered_users}" >
 		        
 		        <f:facet name="header">
 		            <p:outputPanel>
 		                <h:outputText value="Search all fields:" />
-		                <p:inputText id="globalFilter" onkeyup="PF('usersTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+		                <p:inputText id="globalFilter" onkeyup="PF('users_table').filter()" style="width:150px" placeholder="Enter keyword"/>
 		            </p:outputPanel>
 		        </f:facet>
 		 
@@ -41,46 +41,48 @@
 			    </p:column>
 			    
 			    <p:column headerText="Options">
-				    <p:commandButton value="Alterar" type="button" 
-				    	onclick="PF('upload_modal').show();" />				 
-				    <p:commandButton value="Excluir" type="button" 
-				    	onclick="PF('delete_modal').show();" />
+			    
+				    <p:commandButton value="Alterar" oncomplete="PF('upload_modal').show()" update=":form:upload_modal">
+				    	<f:setPropertyActionListener value="#{user}" target="#{user_view.selected_user}" />
+				    </p:commandButton>
+				    
 			    </p:column>
 			    
 			</p:dataTable>
+			
+			<p:dialog id="upload_modal" header="Alterar" widgetVar="upload_modal" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+				<h:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputText value="ID: " />
+							<h:inputText value="#{user_view.selected_user.id}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Name: " />
+							<h:inputText value="#{user_view.selected_user.name}"/>	
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Age: " />
+							<h:inputText value="#{user_view.selected_user.age}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Gender: " />
+							<h:inputText value="#{user_view.selected_user.gender}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column><h:commandButton value="Atualizar"/></p:column>
+						<p:column><h:commandButton value="Cancelar"/></p:column>
+					</p:row>
+				</h:panelGrid>
+			</p:dialog>
+			
 		</h:form>
-		<p:dialog header="Alterar" widgetVar="upload_modal" minHeight="40">
-			<h:panelGrid>
-				<p:row>
-					<p:column><h:outputText value="ID" /></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:inputText/></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:outputText value="Name" /></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:inputText/></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:outputText value="Age" /></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:inputText/></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:outputText value="Gender" /></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:inputText/></p:column>
-				</p:row>
-				<p:row>
-					<p:column><h:commandButton value="Atualizar"/></p:column>
-					<p:column><h:commandButton value="Cancelar"/></p:column>
-				</p:row>
-			</h:panelGrid>		
-		</p:dialog>
-		
      </h:body>
 </html>

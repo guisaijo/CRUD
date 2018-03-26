@@ -11,9 +11,9 @@ import javax.faces.bean.ViewScoped;
 
 import domain.User;
  
-@ManagedBean(name="dtUserBasicView")
+@ManagedBean(name="user_view")
 @ViewScoped
-public class UserBasicView implements Serializable {
+public class user_view implements Serializable {
 	
 	/**
 	 * 
@@ -21,7 +21,8 @@ public class UserBasicView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private List<User> users;
-	private List<User> filteredUsers;
+	private List<User> filtered_users;
+	private User selected_user;
  
 	@PostConstruct
     public void init() {
@@ -87,13 +88,23 @@ public class UserBasicView implements Serializable {
     public List<User> getUsers() {
         return users;
     }
-    
-	public List<User> getFilteredUsers() {
-		return filteredUsers;
+
+	public List<User> getFiltered_users() {
+		return filtered_users;
 	}
 
-	public void setFilteredUsers(List<User> filteredUsers) {
-		this.filteredUsers = filteredUsers;
+	public void setFiltered_users(List<User> filtered_users) {
+		this.filtered_users = filtered_users;
 	}
+
+	public User getSelected_user() {
+		return selected_user;
+	}
+
+	public void setSelected_user(User selected_user) {
+		this.selected_user = selected_user;
+	}
+    
+    
 }
 
