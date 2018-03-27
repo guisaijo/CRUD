@@ -7,23 +7,22 @@
      <h:head>Users list</h:head>
      <h:body>
 	 	<h:form id="form">
-	 		 
-		 	<p:dataTable var="user" value="#{user_view.users}" widgetVar="users_table"
+			<p:growl id="msgs" showDetail="true" />
+		 	
+		 	<p:dataTable var="user" widgetVar="userTable" value="#{userView.users}"
 		 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
-		 			{CurrentPageReport} {JumpToPageDropdown} 
-		 			{NextPageLink} {LastPageLink}"
-		 		paginator="true" rows="3" id="users"
-		 		emptyMessage="No users found with given criteria" 
-		 		filteredValue="#{user_view.filtered_users}" >
+		 			{CurrentPageReport} {NextPageLink} {LastPageLink}"
+		 		rows="3" paginator="true" 
+		 		id="users" emptyMessage="No users found with given criteria" 
+		 		filteredValue="#{userView.filteredUsers}" >
 		        
 		        <f:facet name="header">
 		            <p:outputPanel>
-		                <h:outputText value="Search all fields:" />
-		                <p:inputText id="globalFilter" onkeyup="PF('users_table').filter()" style="width:150px" placeholder="Enter keyword"/>
+		                <h:outputText value="Buscar: " />
+		                <p:inputText id="global_filter" onkeyup="PF('userTable').filter()" style="width:150px" placeholder="Enter keyword"/>
 		            </p:outputPanel>
 		        </f:facet>
-		 
-		        
+		
 			    <p:column filterStyle="display:none" filterBy="#{user.id}" headerText="Id">
 			        <h:outputText value="#{user.id}" />
 			    </p:column>
@@ -42,38 +41,40 @@
 			    
 			    <p:column headerText="Options">
 			    
-				    <p:commandButton value="Alterar" oncomplete="PF('upload_modal').show()" update=":form:upload_modal">
-				    	<f:setPropertyActionListener value="#{user}" target="#{user_view.selected_user}" />
+				    <p:commandButton value="Alterar" oncomplete="PF('uploadDlg').show()" update=":form2:uploadDlg" >
+				   		<f:setPropertyActionListener target="#{userView.selectedUser}" value="#{user}" />
 				    </p:commandButton>
 				    
 			    </p:column>
 			    
 			</p:dataTable>
-			
-			<p:dialog id="upload_modal" header="Alterar" widgetVar="upload_modal" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+		</h:form>
+		<h:form id="form2">
+			<p:dialog id="uploadDlg" widgetVar="uploadDlg" header="Alterar" 
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 				<h:panelGrid>
 					<p:row>
 						<p:column>
 							<h:outputText value="ID: " />
-							<h:inputText value="#{user_view.selected_user.id}"/>
+							<h:inputText value="#{userView.selectedUser.id}"/>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Name: " />
-							<h:inputText value="#{user_view.selected_user.name}"/>	
+							<h:inputText value="#{userView.selectedUser.name}"/>	
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Age: " />
-							<h:inputText value="#{user_view.selected_user.age}"/>
+							<h:inputText value="#{userView.selectedUser.age}"/>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Gender: " />
-							<h:inputText value="#{user_view.selected_user.gender}"/>
+							<h:inputText value="#{userView.selectedUser.gender}"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -82,7 +83,6 @@
 					</p:row>
 				</h:panelGrid>
 			</p:dialog>
-			
 		</h:form>
      </h:body>
 </html>
