@@ -18,8 +18,9 @@
 		        
 		        <f:facet name="header">
 		            <p:outputPanel>
-		                <h:outputText value="Buscar: " />
-		                <p:inputText id="global_filter" onkeyup="PF('userTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+		                <h:outputText value="Search: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('userTable').filter()" placeholder="Enter keyword"/>
+		                <h:commandButton value="Create user" type="button" onclick="PF('createDlg').show()"/>
 		            </p:outputPanel>
 		        </f:facet>
 		
@@ -41,22 +42,24 @@
 			    
 			    <p:column headerText="Options">
 			    
-				    <p:commandButton value="Alterar" oncomplete="PF('uploadDlg').show()" update=":form2:uploadDlg" >
+				    <p:commandButton value="Update" oncomplete="PF('updateDlg').show()" update=":form2:updateDlg" >
 				   		<f:setPropertyActionListener target="#{userView.selectedUser}" value="#{user}" />
 				    </p:commandButton>
 				    
 			    </p:column>
 			    
-			</p:dataTable>
+			</p:dataTable>	
+				
 		</h:form>
+		
 		<h:form id="form2">
-			<p:dialog id="uploadDlg" widgetVar="uploadDlg" header="Alterar" 
+			<p:dialog id="updateDlg" widgetVar="updateDlg" header="Update" 
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 				<h:panelGrid>
 					<p:row>
 						<p:column>
 							<h:outputText value="ID: " />
-							<h:inputText value="#{userView.selectedUser.id}"/>
+							<h:inputText value="#{userView.selectedUser.id}" disabled="true" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -74,15 +77,61 @@
 					<p:row>
 						<p:column>
 							<h:outputText value="Gender: " />
-							<h:inputText value="#{userView.selectedUser.gender}"/>
+							<p:selectOneMenu value="#{userView.selectedUser.gender}">
+								<f:selectItem itemLabel="Male" 
+									itemValue="Male" />
+								<f:selectItem itemLabel="Female" 
+									itemValue="Female" />
+							</p:selectOneMenu>
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column><h:commandButton value="Atualizar"/></p:column>
-						<p:column><h:commandButton value="Cancelar"/></p:column>
+						<p:column>
+							<h:commandButton value="Update"/>
+						</p:column>
+						<p:column>
+							<h:commandButton value="Cancel"/>
+						</p:column>
 					</p:row>
 				</h:panelGrid>
 			</p:dialog>
-		</h:form>
+		</h:form>		
+     	
+     	<h:form id="form3">
+     		<p:dialog id="createDlg" widgetVar="createDlg" modal="true" header="Create">
+     			<h:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputText value="Name: " />
+							<h:inputText placeholder="Ex: Guilherme"/>	
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Age: " />
+							<h:inputText placeholder="Ex: 24"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Gender: " />
+							<p:selectOneMenu>
+								<f:selectItem itemLabel="Male" itemValue="Male" />
+								<f:selectItem itemLabel="Female" itemValue="Female" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:commandButton value="Create"/>
+						</p:column>
+						<p:column>
+							<h:commandButton value="Cancel"/>
+						</p:column>
+					</p:row>
+				</h:panelGrid>
+     		</p:dialog>
+     	</h:form>
+     	
      </h:body>
 </html>

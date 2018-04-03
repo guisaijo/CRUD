@@ -1,12 +1,12 @@
 package domain;
 
-public class User {
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+public class User extends DomainEntity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	public String getName() {
 		return name;
 	}
@@ -26,6 +26,13 @@ public class User {
 		this.gender = gender;
 	}
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	private String id;
 	private String name;
 	private int age;

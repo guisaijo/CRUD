@@ -3,12 +3,14 @@ package beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import Facade.Facade;
+import domain.DomainEntity;
+import domain.Result;
 import domain.User;
  
 @ManagedBean(name="userView")
@@ -23,71 +25,33 @@ public class UserView implements Serializable {
 	private List<User> users;
 	private List<User> filteredUsers;
 	private User selectedUser;
- 
+	
 	@PostConstruct
     public void init() {
+    	Facade facade = new Facade();
+    	users = new ArrayList<User>();
+    	DomainEntity de = new DomainEntity();
+    	Result result;
     	
-		users = new ArrayList<User>();
+    	result = facade.read(de);
     	
-    	User user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Guilherme");
-    	user.setAge(23);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Juliana");
-    	user.setAge(14);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Tayla");
-    	user.setAge(18);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Isabel");
-    	user.setAge(47);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Milton");
-    	user.setAge(53);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Fernando");
-    	user.setAge(29);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
+    	for(DomainEntity aux: result.getDomainEntity()) {
+    		User user = (User) aux;
+    		users.add(user);
+    	}
     }
      
-    public List<User> getUsers() {
+	public List<User> getUsers() {
         return users;
-    }
+	}
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
 
 	public List<User> getFilteredUsers() {
 		return filteredUsers;
@@ -97,12 +61,6 @@ public class UserView implements Serializable {
 		this.filteredUsers = filteredUsers;
 	}
 
-	public User getSelectedUser() {
-		return selectedUser;
-	}
 
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}    
 }
 
