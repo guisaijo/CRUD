@@ -1,6 +1,6 @@
-package Interfaces;
+package interfaces;
+import application.Result;
 import domain.DomainEntity;
-import domain.Result;
 
 public interface IFacade {
 	public Result create(DomainEntity domainEntity);

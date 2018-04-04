@@ -1,4 +1,4 @@
-package beans;
+package bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import Facade.Facade;
+import application.Result;
 import domain.DomainEntity;
-import domain.Result;
 import domain.User;
+import facade.Facade;
  
 @ManagedBean(name="userView")
 @ViewScoped
@@ -30,13 +30,13 @@ public class UserView implements Serializable {
     public void init() {
     	Facade facade = new Facade();
     	users = new ArrayList<User>();
-    	DomainEntity de = new DomainEntity();
+    	User user = new User();
     	Result result;
     	
-    	result = facade.read(de);
+    	result = facade.read(user);
     	
     	for(DomainEntity aux: result.getDomainEntity()) {
-    		User user = (User) aux;
+    		user = (User) aux;
     		users.add(user);
     	}
     }

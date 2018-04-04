@@ -1,6 +1,8 @@
-package domain;
+package application;
 
 import java.util.List;
+
+import domain.DomainEntity;
 
 public class Result {
 	

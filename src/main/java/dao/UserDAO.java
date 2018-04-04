@@ -1,27 +1,17 @@
-package Facade;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import Interfaces.IFacade;
+import application.Result;
 import domain.DomainEntity;
-import domain.Result;
 import domain.User;
+import interfaces.IDAO;
 
-public class Facade implements IFacade {
+public class UserDAO implements IDAO {
 
-	public Result create(DomainEntity domainEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Result delete(DomainEntity domainEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Result update(DomainEntity domainEntity) {
+	public Result create(DomainEntity de) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -30,6 +20,7 @@ public class Facade implements IFacade {
 		// TODO Auto-generated method stub
 		
 		List<DomainEntity> users = new ArrayList<DomainEntity>();
+		
 		Result result = new Result();
     	User user = new User();
     	
@@ -89,7 +80,17 @@ public class Facade implements IFacade {
     	result.setDomainEntity(users);
     	
 		return result;
-		
+	
+	}
+
+	public Result update(DomainEntity de) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Result delete(DomainEntity de) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
