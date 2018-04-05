@@ -1,16 +1,23 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import application.Result;
+import connection.GetConnection;
 import domain.DomainEntity;
 import domain.User;
-import interfaces.IDAO;
 
-public class UserDAO implements IDAO {
+public class UserDAO extends AbstractDAO {
+	
+	public UserDAO() {		
+		// TODO Auto-generated constructor stub
+		super("tb_user", "user_id");
+	}
 
+	Result result;
+	
 	public Result create(DomainEntity de) {
 		// TODO Auto-generated method stub
 		return null;
@@ -18,67 +25,66 @@ public class UserDAO implements IDAO {
 
 	public Result read(DomainEntity de) {
 		// TODO Auto-generated method stub
+		result = new Result();
+		User user = (User) de;
+		connection = GetConnection.getConnectionMySQL();
+		PreparedStatement pst=null;
 		
-		List<DomainEntity> users = new ArrayList<DomainEntity>();
+		try {
+			
+			connection.setAutoCommit(false);
+			
+			StringBuilder query = new StringBuilder();
+			query.append("Select * FROM tb_user");
+			
+			if(!user.equals(null)) {
+				
+				query.append("WHERE");
+				query.append("user_id");
+				query.append("=");
+				query.append(user.getName());
+				
+			}
+			
+			pst = connection.prepareStatement(query.toString());
+			
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				user = new User();
+				
+				user.setId(rs.getString("user_id"));
+				user.setName(rs.getString("user_name"));
+				user.setAge(rs.getInt("user_age"));
+				user.setGender(rs.getString("user_gender"));
+				
+				result.getDomainEntity().add(user);
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			e.printStackTrace();
+			result.setMessage("Error into SQL");
+			
+		} finally {
+			
+			try {
+				pst.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				result.setMessage("Error to close database");
+			}
+			
+		}	
 		
-		Result result = new Result();
-    	User user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Guilherme");
-    	user.setAge(23);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Juliana");
-    	user.setAge(14);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Tayla");
-    	user.setAge(18);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Isabel");
-    	user.setAge(47);
-    	user.setGender("Female");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Milton");
-    	user.setAge(53);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
-    	user = new User();
-    	
-    	user.setId(UUID.randomUUID().toString().substring(0, 8));
-    	user.setName("Fernando");
-    	user.setAge(29);
-    	user.setGender("Male");
-    	
-    	users.add(user);
-    	
-    	
-    	result.setDomainEntity(users);
-    	
 		return result;
 	
 	}
@@ -92,5 +98,4 @@ public class UserDAO implements IDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
