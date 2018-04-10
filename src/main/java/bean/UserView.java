@@ -24,13 +24,13 @@ public class UserView implements Serializable {
 	
 	private List<User> users;
 	private List<User> filteredUsers;
-	private User selectedUser;
+	private User user;
 	
 	@PostConstruct
     public void init() {
     	Facade facade = new Facade();
     	users = new ArrayList<User>();
-    	User user = new User();
+    	user = new User();
     	Result result;
     	
     	result = facade.read(user);
@@ -44,15 +44,15 @@ public class UserView implements Serializable {
 	public List<User> getUsers() {
         return users;
 	}
-
-	public User getSelectedUser() {
-		return selectedUser;
+	
+	public User getUser() {
+		return user;
 	}
 
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
+	public void setUser(User user) {
+		this.user = user;
 	}
-
+	
 	public List<User> getFilteredUsers() {
 		return filteredUsers;
 	}
@@ -61,6 +61,8 @@ public class UserView implements Serializable {
 		this.filteredUsers = filteredUsers;
 	}
 
-
+	public void createUser() {
+		System.out.println(user.getName());
+	}
 }
 

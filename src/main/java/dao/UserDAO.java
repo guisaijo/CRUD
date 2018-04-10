@@ -3,6 +3,8 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import application.Result;
 import connection.GetConnection;
@@ -28,6 +30,7 @@ public class UserDAO extends AbstractDAO {
 		result = new Result();
 		User user = (User) de;
 		connection = GetConnection.getConnectionMySQL();
+		List<DomainEntity> users = new ArrayList<DomainEntity>();
 		PreparedStatement pst=null;
 		
 		try {
@@ -37,7 +40,7 @@ public class UserDAO extends AbstractDAO {
 			StringBuilder query = new StringBuilder();
 			query.append("Select * FROM tb_user");
 			
-			if(!user.equals(null)) {
+			if(user.getId() != null) {
 				
 				query.append("WHERE");
 				query.append("user_id");
@@ -58,9 +61,11 @@ public class UserDAO extends AbstractDAO {
 				user.setAge(rs.getInt("user_age"));
 				user.setGender(rs.getString("user_gender"));
 				
-				result.getDomainEntity().add(user);
+				users.add(user);
 				
 			}
+			
+			result.setDomainEntity(users);
 			
 		} catch (SQLException e) {
 			

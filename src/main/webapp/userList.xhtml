@@ -20,7 +20,9 @@
 		            <p:outputPanel>
 		                <h:outputText value="Search: " />
 		                <p:inputText id="globalFilter" onkeyup="PF('userTable').filter()" placeholder="Enter keyword"/>
-		                <h:commandButton value="Create user" type="button" onclick="PF('createDlg').show()"/>
+		                <p:commandButton value="Create" oncomplete="PF('createDlg').show()" update=":form3:createDlg" >
+				   			<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
+				   		</p:commandButton>
 		            </p:outputPanel>
 		        </f:facet>
 		
@@ -43,7 +45,7 @@
 			    <p:column headerText="Options">
 			    
 				    <p:commandButton value="Update" oncomplete="PF('updateDlg').show()" update=":form2:updateDlg" >
-				   		<f:setPropertyActionListener target="#{userView.selectedUser}" value="#{user}" />
+				   		<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
 				    </p:commandButton>
 				    
 			    </p:column>
@@ -59,25 +61,25 @@
 					<p:row>
 						<p:column>
 							<h:outputText value="ID: " />
-							<h:inputText value="#{userView.selectedUser.id}" disabled="true" />
+							<h:inputText value="#{userView.user.id}" disabled="true" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Name: " />
-							<h:inputText value="#{userView.selectedUser.name}"/>	
+							<h:inputText value="#{userView.user.name}"/>	
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Age: " />
-							<h:inputText value="#{userView.selectedUser.age}"/>
+							<h:inputText value="#{userView.user.age}"/>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Gender: " />
-							<p:selectOneMenu value="#{userView.selectedUser.gender}">
+							<p:selectOneMenu value="#{userView.user.gender}">
 								<f:selectItem itemLabel="Male" 
 									itemValue="Male" />
 								<f:selectItem itemLabel="Female" 
@@ -123,7 +125,9 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:commandButton value="Create"/>
+							<p:commandButton value="Create" action="#{userView.createUser}">
+				   				<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
+				   	 		</p:commandButton>
 						</p:column>
 						<p:column>
 							<h:commandButton value="Cancel"/>
