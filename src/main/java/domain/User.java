@@ -25,15 +25,7 @@ public class User extends DomainEntity{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 
-	private String id;
 	private String name;
 	private int age;
 	private String gender;

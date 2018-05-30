@@ -6,10 +6,12 @@
     xmlns:p="http://primefaces.org/ui">
      <h:head>Users list</h:head>
      <h:body>
+     
 	 	<h:form id="form">
+	 	
 			<p:growl id="msgs" showDetail="true" />
 		 	
-		 	<p:dataTable var="user" widgetVar="userTable" value="#{userView.users}"
+		 	<p:dataTable var="userItem" widgetVar="userTable" value="#{userView.users}"
 		 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
 		 			{CurrentPageReport} {NextPageLink} {LastPageLink}"
 		 		rows="3" paginator="true" 
@@ -18,50 +20,54 @@
 		        
 		        <f:facet name="header">
 		            <p:outputPanel>
-		                <h:outputText value="Search: " />
+		            	
+		                <h:outputText value="Search: "/>
 		                <p:inputText id="globalFilter" onkeyup="PF('userTable').filter()" placeholder="Enter keyword"/>
-		                <p:commandButton value="Create" oncomplete="PF('createDlg').show()" update=":form3:createDlg" >
-				   			<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
-				   		</p:commandButton>
+						
+		                <h:commandButton value="Create user" type="button" onclick="PF('createDlg').show()" update=":form3:createDlg"/>
+		                
 		            </p:outputPanel>
 		        </f:facet>
-		
-			    <p:column filterStyle="display:none" filterBy="#{user.id}" headerText="Id">
-			        <h:outputText value="#{user.id}" />
+				
+			    <p:column filterStyle="display:none" filterBy="#{userItem.id}" headerText="Id">
+			        <h:outputText value="#{userItem.id}" />
 			    </p:column>
 			 
-			    <p:column filterStyle="display:none" filterBy="#{user.name}" headerText="Name">
-			        <h:outputText value="#{user.name}" />
+			    <p:column filterStyle="display:none" filterBy="#{userItem.name}" headerText="Name">
+			        <h:outputText value="#{userItem.name}" />
 			    </p:column>
 			 
 			    <p:column headerText="Age">
-			        <h:outputText value="#{user.age}" />
+			        <h:outputText value="#{userItem.age}" />
 			    </p:column>
 			 
 			    <p:column headerText="Gender">
-			        <h:outputText value="#{user.gender}" />
+			        <h:outputText value="#{userItem.gender}" />
 			    </p:column>
 			    
 			    <p:column headerText="Options">
-			    
 				    <p:commandButton value="Update" oncomplete="PF('updateDlg').show()" update=":form2:updateDlg" >
-				   		<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
+				   		<f:setPropertyActionListener target="#{userView.user}" value="#{userItem}" />
 				    </p:commandButton>
-				    
-			    </p:column>
+				    <p:commandButton value="Delete" action="#{userView.userDelete}" update="@form">
+				   		<f:setPropertyActionListener target="#{userView.user}" value="#{userItem}" />
+				    </p:commandButton>
+			    </p:column> 
 			    
-			</p:dataTable>	
-				
+			</p:dataTable>
+	
 		</h:form>
 		
 		<h:form id="form2">
+		
 			<p:dialog id="updateDlg" widgetVar="updateDlg" header="Update" 
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				
 				<h:panelGrid>
 					<p:row>
 						<p:column>
 							<h:outputText value="ID: " />
-							<h:inputText value="#{userView.user.id}" disabled="true" />
+							<h:inputText value="#{userView.user.id}"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -89,35 +95,40 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:commandButton value="Update"/>
+							<h:commandButton value="Update" action="#{userView.userUpdate}"/>
 						</p:column>
 						<p:column>
 							<h:commandButton value="Cancel"/>
 						</p:column>
 					</p:row>
 				</h:panelGrid>
+				
 			</p:dialog>
-		</h:form>		
-     	
-     	<h:form id="form3">
-     		<p:dialog id="createDlg" widgetVar="createDlg" modal="true" header="Create">
-     			<h:panelGrid>
+			
+		</h:form>
+
+		<h:form id="form3">
+			
+			<p:dialog id="createDlg" widgetVar="createDlg" header="Create" 
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			
+				<h:panelGrid>
 					<p:row>
 						<p:column>
 							<h:outputText value="Name: " />
-							<h:inputText placeholder="Ex: Guilherme"/>	
+							<h:inputText value="#{userView.user.name}"/>	
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Age: " />
-							<h:inputText placeholder="Ex: 24"/>
+							<h:inputText value="#{userView.user.age}"/>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText value="Gender: " />
-							<p:selectOneMenu>
+							<p:selectOneMenu value="#{userView.user.gender}">
 								<f:selectItem itemLabel="Male" itemValue="Male" />
 								<f:selectItem itemLabel="Female" itemValue="Female" />
 							</p:selectOneMenu>
@@ -125,17 +136,17 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:commandButton value="Create" action="#{userView.createUser}">
-				   				<f:setPropertyActionListener target="#{userView.user}" value="#{user}" />
-				   	 		</p:commandButton>
+							<h:commandButton value="Create" action="#{userView.userCreate}"/>
 						</p:column>
 						<p:column>
 							<h:commandButton value="Cancel"/>
 						</p:column>
 					</p:row>
 				</h:panelGrid>
-     		</p:dialog>
-     	</h:form>
-     	
+				
+			</p:dialog>
+			
+		</h:form>
+
      </h:body>
 </html>

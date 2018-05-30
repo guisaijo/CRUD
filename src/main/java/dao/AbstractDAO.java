@@ -19,7 +19,7 @@ public abstract class AbstractDAO implements IDAO{
 		this.table = table;
 		this.idTable = idTable;
 	}
-	public Result Delete(DomainEntity de){
+	public Result delete(DomainEntity de){
 		Result result = new Result();
 		connection = GetConnection.getConnectionMySQL();
 		PreparedStatement pst=null;
@@ -41,7 +41,7 @@ public abstract class AbstractDAO implements IDAO{
 			pst = connection.prepareStatement(query.toString());
 			
 			pst.executeUpdate();
-			connection.commit();
+			
 		}
 		catch(SQLException e) {
 			try {
@@ -54,6 +54,7 @@ public abstract class AbstractDAO implements IDAO{
 			result.setMessage("Error into SQL");
 		}finally{
 			try {
+				connection.commit();
 				pst.close();
 				connection.close();
 			} catch (SQLException e) {
